@@ -1,0 +1,14 @@
+--- a/clang/tools/driver/cc1_main.cpp	2024-03-01 00:00:00.000000000 +0000
++++ b/clang/tools/driver/cc1_main.cpp	2024-03-01 00:00:01.000000000 +0000
+@@ -77,6 +77,10 @@
+ int cc1_main(ArrayRef<const char *> Argv, const char *Argv0, void *MainAddr) {
+   ensureSufficientStack();
+
++  // When invoked from the in-process cc1 path, Argv[0] may be "-cc1".
++  // Skip it since the frontend option parser doesn't handle it.
++  if (!Argv.empty() && StringRef(Argv.front()) == "-cc1")
++    Argv = Argv.slice(1);
++
+   IntrusiveRefCntPtr<DiagnosticIDs> DiagID(new DiagnosticIDs());
+ 
+   // Register the support for object-file-wrapped Clang modules.
