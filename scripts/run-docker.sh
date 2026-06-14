@@ -70,5 +70,8 @@ $SUDO docker start $CONTAINER_NAME >/dev/null 2>&1 || {
 if [ "$#" -eq  "0" ]; then
 	$SUDO docker exec --env "DOCKER_EXEC_PID_FILE_PATH=$DOCKER_EXEC_PID_FILE_PATH" --interactive $DOCKER_TTY $CONTAINER_NAME bash
 else
-	$SUDO docker exec --env "DOCKER_EXEC_PID_FILE_PATH=$DOCKER_EXEC_PID_FILE_PATH" --interactive $DOCKER_TTY $CONTAINER_NAME "$@"
+	$SUDO docker exec \
+		--env "DOCKER_EXEC_PID_FILE_PATH=$DOCKER_EXEC_PID_FILE_PATH" \
+		${TERMUX_APP_PACKAGE:+--env TERMUX_APP_PACKAGE=$TERMUX_APP_PACKAGE} \
+		--interactive $DOCKER_TTY $CONTAINER_NAME "$@"
 fi
