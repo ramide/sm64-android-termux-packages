@@ -29,6 +29,7 @@ jobs:
     env:
       ANDROID_HOME: "/opt/termux/android-sdk"
       NDK: "/opt/termux/android-ndk"
+      TERMUX_APP_PACKAGE: "com.termux"
     strategy:
       matrix:
         target_arch: [aarch64, arm, i686, x86_64]
